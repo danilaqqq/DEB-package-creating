@@ -1,0 +1,13 @@
+Package: word-count-dbgsym
+Package-Type: ddeb
+Source: word-count
+Version: 1.0
+Auto-Built-Package: debug-symbols
+Architecture: amd64
+Maintainer: Илья Васильев <o715b05@voenmeh.ru>
+Installed-Size: 16
+Depends: word-count (= 1.0)
+Section: debug
+Priority: optional
+Description: debug symbols for word-count
+Build-Ids: 2d82b85895c8aa63a0cbcdff27dd7d25c6e34b0c
