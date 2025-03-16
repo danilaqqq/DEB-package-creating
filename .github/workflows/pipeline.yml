@@ -1,0 +1,52 @@
+ 
+name: word_count Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-test-package:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      # 1. Установка зависимостей
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y build-essential devscripts fakeroot lintian
+
+      # 2. Сборка
+      - name: Build project
+        run: |
+          chmod +x ./../cicdcicd/build.sh
+          ./../cicdcicd/build.sh
+
+      # 3. Тесты
+      - name: Run tests
+        run: |
+          chmod +x ./../cicdcicd/test.sh
+          ./../cicdcicd/test.sh
+
+      # 4. Упаковка
+      - name: Package project
+        run: |
+          chmod +x ./../cicdcicd/package.sh
+          ./../cicdcicd/package.sh
+
+      # 5. Проверка deb-пакета
+      - name: Deb-package check
+        run: |
+          lintian ./../cicddebian/*.deb || true
+
+      # 6. Загрузка артефакта
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: packaged-build
+          path: |
+            ./../cicdbuild/
+            ./../cicddebian/*.deb
