@@ -1,4 +1,3 @@
- 
 name: word_count Pipeline
 
 on:
@@ -12,6 +11,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
+      # 0. Клонируем репозиторий!
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       # 1. Установка зависимостей
       - name: Install dependencies
@@ -35,7 +38,7 @@ jobs:
       - name: Package project
         run: |
           chmod +x ./cicd/package.sh
-          ./cicdcicd/package.sh
+          ./cicd/package.sh
 
       # 5. Проверка deb-пакета
       - name: Deb-package check
