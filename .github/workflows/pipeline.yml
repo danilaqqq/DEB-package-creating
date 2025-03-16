@@ -22,25 +22,25 @@ jobs:
       # 2. Сборка
       - name: Build project
         run: |
-          chmod +x ./../cicd/build.sh
-          ./../cicd/build.sh
+          chmod +x ./cicd/build.sh
+          ./cicd/build.sh
 
       # 3. Тесты
       - name: Run tests
         run: |
-          chmod +x ./../cicd/test.sh
-          ./../cicd/test.sh
+          chmod +x ./cicd/test.sh
+          ./cicd/test.sh
 
       # 4. Упаковка
       - name: Package project
         run: |
-          chmod +x ./../cicd/package.sh
-          ./../cicdcicd/package.sh
+          chmod +x ./cicd/package.sh
+          ./cicdcicd/package.sh
 
       # 5. Проверка deb-пакета
       - name: Deb-package check
         run: |
-          lintian ./../debian/*.deb || true
+          lintian ./debian/*.deb || true
 
       # 6. Загрузка артефакта
       - name: Upload build artifact
@@ -48,5 +48,5 @@ jobs:
         with:
           name: packaged-build
           path: |
-            ./../build/
-            ./../debian/*.deb
+            ./build/
+            ./debian/*.deb
