@@ -19,11 +19,10 @@ int countWords(const std::string& str) {
 
 int main() {
     std::string input;
-    std::cout << "Введите строку: ";
     std::getline(std::cin, input);
 
     int wordCount = countWords(input);
-    std::cout << "Количество слов: " << wordCount << std::endl;
+    std::cout << wordCount << std::endl;
 
     return 0;
 }
