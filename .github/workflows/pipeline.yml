@@ -3,6 +3,8 @@ name: word_count Pipeline
 on:
   push:
     branches: [ main ]
+    tags:
+      - 'v*'
   pull_request:
     branches: [ main ]
 
@@ -53,3 +55,20 @@ jobs:
           path: |
             ./build/
             ./debian/*.deb
+
+      # 7. Создание релиза
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: Release ${{ github.ref_name }}
+          tag_name: ${{ github.ref_name }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # 8. Прикрепление .deb файла к релизу
+      - name: Upload Release Asset
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ../*.deb
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
