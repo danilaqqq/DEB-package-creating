@@ -20,7 +20,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt update
-          sudo apt install -y build-essential devscripts fakeroot lintian
+          sudo apt install -y build-essential devscripts fakeroot lintian debhelper
 
       # 2. Сборка
       - name: Build project
