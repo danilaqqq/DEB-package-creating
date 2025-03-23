@@ -19,4 +19,4 @@ COPY word-count_1.0_amd64.deb /tmp/word-count_1.0_amd64.deb
 RUN apt update && apt install -y /tmp/word-count_1.0_amd64.deb
 
 # Запуск программы
-CMD ["/usr/bin/word_count", "--test"]
+CMD ["/usr/bin/word_count", "--test", "ya lublu uchitsya, blin class"]
