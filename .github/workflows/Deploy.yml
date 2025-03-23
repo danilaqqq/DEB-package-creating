@@ -17,11 +17,11 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: deb-package
-          path: ./*.deb
+          path: ./artifacts
 
       - name: Build Docker image
         run: |
-          cp ./*.deb ./word-count.deb
+          cp ./artifacts/*.deb ./word-count.deb
           docker build -t word-count-deploy .
 
       - name: Run Docker container
