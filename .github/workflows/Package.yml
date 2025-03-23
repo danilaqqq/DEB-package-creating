@@ -1,0 +1,48 @@
+name: Package Project
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y build-essential devscripts fakeroot lintian dh-make
+
+      - name: Build project to package
+        run: |
+          chmod +x ./cicd/build.sh
+          ./cicd/build.sh
+
+      - name: Package project
+        run: |
+          chmod +x ./cicd/package.sh
+          ./cicd/package.sh
+
+      - name: deb-package check
+        run: |
+          lintian ./debian/*.deb || true
+
+      - name: Upload package artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: deb-package
+          path: ../*.deb
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ./debian/*.deb
+          files: ../*.deb
+          name: Release ${{ github.ref_name }}
+          tag_name: ${{ github.ref_name }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

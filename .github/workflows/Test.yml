@@ -1,0 +1,29 @@
+name: Test Project
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y build-essential
+
+      - name: Build project to test
+        run: |
+          chmod +x ./cicd/build.sh
+          ./cicd/build.sh
+
+      - name: Run tests
+        run: |
+          chmod +x ./cicd/test.sh
+          ./cicd/test.sh
