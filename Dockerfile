@@ -5,7 +5,6 @@ RUN apt-get update && apt-get install -y \
     libstdc++6 \
     gcc \
     g++ \
-    docker.io \
     && rm -rf /var/lib/apt/lists/*
 
 # Копирование deb-пакет внутрь контейнера
