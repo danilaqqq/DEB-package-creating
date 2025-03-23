@@ -13,12 +13,15 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: Download .deb artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: deb-package
-          path: ./artifact
+        
+      - name: Install GitHub CLI
+        run: sudo apt-get install gh
+      
+      - name: Download artifact
+        run: |
+          gh run download ${{ github.event.workflow_run.id }} -n deb-package
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build Docker image
         run: |
