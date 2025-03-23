@@ -30,3 +30,7 @@ jobs:
       - name: Run Docker container
         run: |
           docker run --rm word-count-deploy
+
+      - name: Run Docker container with input
+        run: |
+          echo "ya lublu uchitsya, blin class" | docker run --rm -i word-count-deploy
