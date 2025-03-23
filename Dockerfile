@@ -6,10 +6,10 @@ RUN apt update && apt install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Копирование deb-пакет внутрь контейнера
-COPY word-count.deb /tmp/word-count.deb
+COPY word-count_1.0_amd64.deb /tmp/word-count_1.0_amd64.deb
 
 # Устанавка deb-пакет
-RUN apt update && apt install -y /tmp/word-count.deb
+RUN apt update && apt install -y /tmp/word-count_1.0_amd64.deb
 
 # Запуск программы
 CMD ["/usr/bin/word_count", "--test"]
