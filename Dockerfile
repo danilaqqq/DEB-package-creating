@@ -1,10 +1,15 @@
-FROM ubuntu:23.04
+FROM ubuntu:22.04
 
 # Обновлеие и устанавка необходимых пакетов
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && \
+    apt-get install -y software-properties-common && \
+    add-apt-repository ppa:ubuntu-toolchain-r/test && \
+    apt-get update && \
+    apt-get install -y \
     libstdc++6 \
-    gcc \
-    g++ \
+    gcc-12 \
+    g++-12 \
+    docker.io \
     && rm -rf /var/lib/apt/lists/*
 
 # Копирование deb-пакет внутрь контейнера
