@@ -36,12 +36,12 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: deb-package
-          path: ./debian/*.deb
+          path: ./*.deb
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          files: ./debian/*.deb
+          files: ./*.deb
           name: Release ${{ github.ref_name }}
           tag_name: ${{ github.ref_name }}
         env:
