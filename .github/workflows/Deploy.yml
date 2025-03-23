@@ -13,49 +13,21 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        
-      - name: Download all artifacts
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const run_id = ${{ github.event.workflow_run.id }};
-            const artifacts = await github.rest.actions.listWorkflowRunArtifacts({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              run_id: run_id
-            });
 
-            const matchArtifact = artifacts.data.artifacts.find(artifact => artifact.name === "deb-package");
-            if (!matchArtifact) {
-              core.setFailed(Artifact deb-package not found);
-            } else {
-              console.log(Found Artifact: ${matchArtifact.name}, downloading...);
-              const download = await github.rest.actions.downloadArtifact({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                artifact_id: matchArtifact.id,
-                archive_format: 'zip'
-              });
+      - name: Install GitHub CLI
+        run: sudo apt-get install gh
 
-              const fs = require('fs');
-              const path = require('path');
-              const destPath = path.join(process.env.GITHUB_WORKSPACE, 'artifact.zip');
-              fs.writeFileSync(destPath, Buffer.from(download.data));
-              console.log(Artifact downloaded to ${destPath});
-            }
-
-      - name: Unzip artifact
-        run: unzip artifact.zip -d ./artifact
-
-      - name: Show files
-        run: ls ./artifact
+      - name: Download artifact
+        run: |
+          gh run download ${{ github.event.workflow_run.id }} -n deb-package
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build Docker image
         run: |
-          cp ./artifact/*.deb ./word-count.deb
+          cp ./debian/*.deb ./word-count.deb
           docker build -t word-count-deploy .
 
       - name: Run Docker container
         run: |
           docker run --rm word-count-deploy
-

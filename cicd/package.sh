@@ -7,3 +7,5 @@ dpkg-buildpackage -us -uc
 
 echo ".deb-пакет создан"
 
+echo "Перенос .deb файла в ./debian..."
+mv ../*.deb ./debian/

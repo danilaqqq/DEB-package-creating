@@ -30,18 +30,18 @@ jobs:
 
       - name: deb-package check
         run: |
-          lintian ./*.deb || true
+          lintian ./debian/*.deb || true
 
       - name: Upload package artifact
         uses: actions/upload-artifact@v4
         with:
           name: deb-package
-          path: ./*.deb
+          path: ./debian/*.deb
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          files: ./*.deb
+          files: ./debian/*.deb
           name: Release ${{ github.ref_name }}
           tag_name: ${{ github.ref_name }}
         env:
