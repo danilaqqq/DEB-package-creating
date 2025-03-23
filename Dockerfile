@@ -1,17 +1,12 @@
-FROM ubuntu:22.04
+FROM ubuntu:23.04
 
 # Обновлеие и устанавка необходимых пакетов
 RUN apt-get update && apt-get install -y \
     libstdc++6 \
-    gcc-11 \
-    g++-11 \
+    gcc \
+    g++ \
     docker.io \
     && rm -rf /var/lib/apt/lists/*
-
-RUN apt-get install -f
-
-# Проверка версии GLIBCXX
-RUN strings /usr/lib/x86_64-linux-gnu/libstdc++.so.6 | grep GLIBCXX
 
 # Копирование deb-пакет внутрь контейнера
 COPY word-count_1.0_amd64.deb /tmp/word-count_1.0_amd64.deb
