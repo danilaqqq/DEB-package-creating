@@ -30,7 +30,7 @@ jobs:
 
       - name: deb-package check
         run: |
-          lintian ./debian/*.deb || true
+          lintian ./*.deb || true
 
       - name: Upload package artifact
         uses: actions/upload-artifact@v4
