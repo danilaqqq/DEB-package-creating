@@ -7,7 +7,12 @@ RUN apt-get update && apt-get install -y \
     g++-11 \
     docker.io \
     && rm -rf /var/lib/apt/lists/*
-    
+
+RUN apt-get install -f
+
+# Проверка версии GLIBCXX
+RUN strings /usr/lib/x86_64-linux-gnu/libstdc++.so.6 | grep GLIBCXX
+
 # Копирование deb-пакет внутрь контейнера
 COPY word-count_1.0_amd64.deb /tmp/word-count_1.0_amd64.deb
 
