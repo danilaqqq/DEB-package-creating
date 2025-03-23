@@ -3,8 +3,8 @@ FROM ubuntu:22.04
 # Обновлеие и устанавка необходимых пакетов
 RUN apt-get update && apt-get install -y \
     libstdc++6 \
-    gcc \
-    g++ \
+    gcc-11 \
+    g++-11 \
     docker.io \
     && rm -rf /var/lib/apt/lists/*
     
