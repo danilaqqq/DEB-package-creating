@@ -19,10 +19,15 @@ jobs:
 
       - name: Download artifact
         run: |
+          ls -al
           gh run download ${{ github.event.workflow_run.id }} -n deb-package
+          ls -al
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
+          
+      - name: List files in debian folder
+        run: ls -al ./debian/
+        
       - name: Build Docker image
         run: |
           cp ./debian/*.deb ./word-count.deb
