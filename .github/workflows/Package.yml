@@ -2,8 +2,9 @@ name: Package Project
 
 on:
   push:
-    tags:
-      - 'v*'
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
   package:
