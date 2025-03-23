@@ -8,6 +8,7 @@ on:
 
 jobs:
   deploy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -17,11 +18,11 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: deb-package
-          path: ./artifacts
+          path: ./artifact
 
       - name: Build Docker image
         run: |
-          cp ./artifacts/*.deb ./word-count.deb
+          cp ./artifact/*.deb ./word-count.deb
           docker build -t word-count-deploy .
 
       - name: Run Docker container
